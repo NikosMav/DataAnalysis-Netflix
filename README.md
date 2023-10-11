@@ -26,14 +26,14 @@ pip install jupyter pandas scikit-learn numpy
 Clone the Repository:
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/your-username/DataAnalysis-Netflix.git
 cd your-repo
 ```
 
 Open the Jupyter Notebook:
 
 ```bash
-jupyter notebook movie_recommendation.ipynb
+jupyter notebook netflix_data_analysis.ipynb
 ```
 
 Run the Notebook:
