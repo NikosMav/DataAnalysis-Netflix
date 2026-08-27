@@ -37,9 +37,9 @@ First dense/rerank run downloads MiniLM + ms-marco CE (~80MB each) and embeds ~7
 
 ### Headline metrics
 
-Source of truth: committed [`results/eval_metrics.json`](results/eval_metrics.json) (same 28 queries). Do not hand-edit this table — regenerate with `python -m retrieval eval`.
+Source of truth: committed [`results/eval_metrics.json`](results/eval_metrics.json) (same 28 queries). Do not hand-edit this table — regenerate with `python -m retrieval eval`, then optionally `python scripts/sync_metrics_docs.py`.
 
-`hybrid+rerank` is now cross-encoder over **`hybrid(bm25+dense,meta)`** (not the weaker TF-IDF hybrid). **Tables below match committed JSON; if that JSON still predates the rewire, treat the `hybrid+rerank` row as stale until eval is re-run.**
+`hybrid+rerank` = cross-encoder over **`hybrid(bm25+dense,meta)`** (not the weaker TF-IDF hybrid).
 
 <!-- METRICS_TABLE_BEGIN -->
 | method | recall@5 | recall@10 | ndcg@5 | ndcg@10 | mrr |
@@ -55,10 +55,10 @@ Source of truth: committed [`results/eval_metrics.json`](results/eval_metrics.js
 | hybrid(tfidf+dense) | 0.5059 | 0.6922 | 0.4941 | 0.5626 | 0.5853 |
 | hybrid(bm25+dense,meta) | 0.6552 | 0.7421 | 0.6351 | 0.6605 | 0.7065 |
 | dense+rerank | 0.6167 | 0.7062 | 0.6179 | 0.6469 | 0.6930 |
-| hybrid+rerank | 0.6882 | 0.7627 | 0.6862 | 0.7053 | 0.7601 |
+| hybrid+rerank | 0.7001 | 0.7817 | 0.6958 | 0.7185 | 0.7583 |
 <!-- METRICS_TABLE_END -->
 
-**Stable comparison (unchanged code paths, from JSON):** hybrid(bm25+dense,meta) R@5 **0.6552** / R@10 **0.7421** / MRR **0.7065** vs dense(title+desc) **0.5849** / **0.6209** / **0.6304**. Quote `hybrid+rerank` only after JSON is refreshed under the new first stage.
+**Headline (from JSON):** hybrid+rerank R@5 **0.7001** / R@10 **0.7817** / MRR **0.7583** vs dense(title+desc) **0.5849** / **0.6209** / **0.6304**.
 
 ## Two tracks
 

@@ -57,7 +57,7 @@ Optional OpenAI embeddings: `DenseRetriever(backend="openai")` + `OPENAI_API_KEY
 
 Labels: [`data/labeled_queries.json`](data/labeled_queries.json) — author judgments with `relevant_show_ids` from this dump. Binary relevance. **Same 28 queries** (unchanged gold set). Metrics from `python -m retrieval eval`; committed [`results/eval_metrics.json`](results/eval_metrics.json) is the source of truth. **n=28, author labels — no confidence intervals.**
 
-`hybrid+rerank` = cross-encoder over **`hybrid(bm25+dense,meta)`** (BM25 + dense on `text_meta`), not over `hybrid(tfidf+dense)`. **If committed JSON still predates that rewire, the `hybrid+rerank` row is stale for the new code path — re-run eval before quoting it.**
+`hybrid+rerank` = cross-encoder over **`hybrid(bm25+dense,meta)`** (BM25 + dense on `text_meta`), not over `hybrid(tfidf+dense)`.
 
 <!-- METRICS_TABLE_BEGIN -->
 | method | recall@5 | recall@10 | ndcg@5 | ndcg@10 | mrr |
@@ -73,10 +73,10 @@ Labels: [`data/labeled_queries.json`](data/labeled_queries.json) — author judg
 | hybrid(tfidf+dense) | 0.5059 | 0.6922 | 0.4941 | 0.5626 | 0.5853 |
 | hybrid(bm25+dense,meta) | 0.6552 | 0.7421 | 0.6351 | 0.6605 | 0.7065 |
 | dense+rerank | 0.6167 | 0.7062 | 0.6179 | 0.6469 | 0.6930 |
-| hybrid+rerank | 0.6882 | 0.7627 | 0.6862 | 0.7053 | 0.7601 |
+| hybrid+rerank | 0.7001 | 0.7817 | 0.6958 | 0.7185 | 0.7583 |
 <!-- METRICS_TABLE_END -->
 
-Numbers above match [`results/eval_metrics.json`](results/eval_metrics.json). After changing retrieval wiring, re-run eval before quoting headline numbers.
+Numbers above match [`results/eval_metrics.json`](results/eval_metrics.json) from the last `python -m retrieval eval` run. After changing retrieval wiring, re-run eval (and `python scripts/sync_metrics_docs.py`) before quoting headline numbers.
 
 ### What the numbers mean
 
@@ -88,7 +88,7 @@ Numbers above match [`results/eval_metrics.json`](results/eval_metrics.json). Af
 
 1. **BM25 beats Boolean and TF-IDF** on this set (R@5 0.52 vs 0.32 / 0.45). Boolean Jaccard was a coarse demo baseline; BM25 is the proper lexical comparator.
 2. **Metadata is mixed, not free lift.** Appending genre/cast/director/country *hurts* TF-IDF early ranks (cast-name noise) and slightly lowers BM25/dense Recall@5, but **helps dense Recall@10 and MRR**. Genre tokens help topical recall; long cast strings dilute sparse IDF.
-3. **Cross-encoder rerank lifts early ranks** over a fixed top-50 pool. The headline path is `hybrid+rerank` = CE over `hybrid(bm25+dense,meta)`.
+3. **Cross-encoder rerank lifts early ranks** over a fixed top-50 pool. Headline path: `hybrid+rerank` = CE over `hybrid(bm25+dense,meta)` (R@5 0.7001 / R@10 0.7817 / MRR 0.7583 on this set).
 4. **Strong first-stage fusion still matters.** `hybrid(bm25+dense,meta)` already beats `hybrid(tfidf+dense)` on every metric before any CE pass.
 5. Gains are real but **set-specific** — 28 author-labeled queries, not a public IR benchmark. Catalog search ≠ recommender.
 
