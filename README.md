@@ -2,11 +2,11 @@
 
 **Author:** Nikolaos (Nikos) Mavrapidis ([NikosMav](https://github.com/NikosMav))
 
-## 5-minute walk (hiring managers)
+## 5-minute walk
 
 **What it is:** offline **catalog text search** over a public Netflix titles dump — Boolean, TF-IDF, BM25, dense MiniLM, hybrid RRF, and a CPU cross-encoder rerank, with metrics on **28 author-labeled** queries.
 
-**What it isn’t:** a recommender, collaborative filtering, TESSI, or RAG-over-the-web. No invented metrics; no production IR claims. Demo models only (MiniLM + ms-marco MiniLM CE). **n=28, author labels — no confidence intervals.**
+**What it isn’t:** a recommender, collaborative filtering, or RAG-over-the-web. No invented metrics; no production IR claims. Demo models only (MiniLM + ms-marco MiniLM CE). **n=28, author labels — no confidence intervals.**
 
 | Command | What you get |
 |---------|----------------|
@@ -85,7 +85,7 @@ Under [`data/`](data/): Netflix titles dump, slim IMDb join for the EDA chart, a
 
 - **No invented metrics.** Tables come from committed JSON / `python -m retrieval eval`.
 - **28 queries, author-labeled.** Honest demo, not a public IR leaderboard; no CIs.
-- **Catalog search ≠ recommender ≠ TESSI ≠ web RAG.**
+- **Catalog search ≠ recommender ≠ web RAG.**
 - **CPU MiniLM + ms-marco CE are demo models.**
 
 ## License

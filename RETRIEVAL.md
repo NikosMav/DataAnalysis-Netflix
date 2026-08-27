@@ -2,7 +2,7 @@
 
 **Author:** Nikolaos (Nikos) Mavrapidis ([NikosMav](https://github.com/NikosMav))
 
-Five-minute walkthrough for hiring managers. This is **catalog text search** over a public Netflix titles dump. It is **not** a production recommender, **not** collaborative filtering, **not** TESSI, and **not** RAG-over-the-web (no LLM generation step).
+Five-minute walkthrough. This is **catalog text search** over a public Netflix titles dump. It is **not** a production recommender, **not** collaborative filtering, and **not** RAG-over-the-web (no LLM generation step).
 
 The older EDA + Boolean/TF-IDF notebook remains: [`netflix_data_analysis.ipynb`](netflix_data_analysis.ipynb). This document covers the **retrieval product** next to it.
 
@@ -133,7 +133,7 @@ Full side-by-side dumps: [`results/qualitative_examples.json`](results/qualitati
 ## Limitations
 
 - **Catalog search ≠ recommender.** No watch history, no CF, no popularity re-rank.
-- **Not TESSI / not web RAG.** No chunking of long docs, no tool-using agent, no generation.
+- **Not web RAG.** No chunking of long docs, no tool-using agent, no generation.
 - **Tiny labeled set.** 28 author queries; useful for honesty, not SOTA claims.
 - **Binary labels only.** No graded relevance → nDCG uses 0/1 gains.
 - **Short marketing blurbs.** Bad descriptions limit every method; metadata helps unevenly.
